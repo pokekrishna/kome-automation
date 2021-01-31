@@ -15,16 +15,16 @@ func FileExists(filePath string) error {
 	}
 
 	// is permission?
-	if os.IsPermission(err){
+	// TODO: The following function does not tell if the file is readable or not
+	// example, even if the permission is 0000, the following function will not error
+	if os.IsPermission(err) {
 		return err
 	}
 
 	// is file? (and not dir!)
-	if !fileInfo.Mode().IsRegular(){
+	if !fileInfo.Mode().IsRegular() {
 		return fmt.Errorf("%s is not a regular file.", filePath)
 	}
 
 	return nil
 }
-
-
