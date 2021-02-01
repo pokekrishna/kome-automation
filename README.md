@@ -8,7 +8,7 @@ The automations include:
     
     _Media Server Automations_ solves this by giving you a UI to manage your plex library (Movies and TV shows) by offering a simple UI.
    
-    The UI scans a set of directory and offers you to either add any directory or file as a Movie or a TV Show (with seasons) by cleverly creating symlinks to the actual files.
+    The application scans a set of directory and offers you to either add any directory or file as a Movie or a TV Show (with seasons) by cleverly creating symlinks to the actual files.
     
-    The UI also offers you to delete any of the titles from the library and keeping the underlying files and deleting the structure it created for the plex library
+    The application also offers you to delete any of the titles from the library and keeping the underlying files and deleting the structure it created for the plex library
    
