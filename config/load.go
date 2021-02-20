@@ -7,16 +7,25 @@ import (
 	"log"
 )
 
-func GetConf(filePath string) (map[interface{}]interface{}, error) {
+
+type Config struct {
+	ServerConfig ServerConfig `yaml:"server_config"`
+}
+
+type ServerConfig struct {
+	BindIP string `yaml:"bind_ip"`
+	BindPort int `yaml:"bind_port"`
+}
+
+func LoadConf(filePath string)  (*Config, error) {
 	// validate config file path
 	if err := filesystem.FileExists(filePath); err != nil {
 		log.Fatal("Error validating Config File: ", err)
 	}
-
-	return loadYAML(filePath)
+	return loadFile(filePath)
 }
 
-func loadYAML(filePath string) (map[interface{}]interface{}, error) {
+func loadFile(filePath string) (*Config, error) {
 	// Read content from file
 	content, err := ioutil.ReadFile(filePath)
 	if err != nil {
@@ -25,8 +34,8 @@ func loadYAML(filePath string) (map[interface{}]interface{}, error) {
 	}
 
 	// load content to yaml
-	m := make(map[interface{}]interface{})
-	if err := yaml.Unmarshal(content, &m); err != nil {
+	m := &Config{}
+	if err := yaml.Unmarshal(content, m); err != nil {
 		return nil, err
 	}
 	return m, nil

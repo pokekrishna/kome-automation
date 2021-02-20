@@ -1,12 +1,12 @@
-package main
+	package main
 
-import (
-	"github.com/pokekrishna/kome-automation/server"
-	"github.com/urfave/cli/v2"
-	"log"
-	"net/http"
-	"os"
-)
+	import (
+		"github.com/pokekrishna/kome-automation/config"
+		"github.com/urfave/cli/v2"
+		"log"
+		"net/http"
+		"os"
+	)
 
 const (
 	appName = "kome-automation-server"
@@ -28,10 +28,20 @@ func main() {
 			Required: true,
 		},
 	}
-	app.Action = server.StartServer
+	app.Action = initialize
 
 	err := app.Run(os.Args)
 	if err != nil {
 		log.Fatal("Cannot run the app: ", err)
 	}
+}
+
+func initialize(ctx *cli.Context) error {
+	// First, check if config file is valid and then load
+	_, err := config.LoadConf(ctx.String("config"))
+	if err != nil {
+		// if there is any problem in getting the conf, exit
+		log.Fatal("Cannot load Config File: ", err)
+	}
+	return nil
 }
